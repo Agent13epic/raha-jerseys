@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raha Jerseys ⚽</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green: #1a7a3e; --green-dark: #115a2c; --green-light: #23a355;
+      --gold: #f5c842; --gold-dark: #c9a022;
+      --pitch: #0d1f0e; --white: #f8faf8; --gray: #9aaa9a; --card-bg: #132215;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--pitch); color: var(--white); font-family: 'Inter', sans-serif; line-height: 1.6; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 62px;
+      background: rgba(13,31,14,0.94); backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(245,200,66,0.15);
+    }
+    .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 900; letter-spacing: 0.04em; color: var(--gold); text-decoration: none; }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-order { background: var(--gold); color: var(--pitch); padding: 0.45rem 1.2rem; border-radius: 4px; font-weight: 700; font-size: 0.85rem; text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: background 0.2s; }
+    .nav-order:hover { background: var(--gold-dark); }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 100px 2rem 4rem; position: relative; overflow: hidden; }
+    .hero-pitch { position: absolute; inset: 0; z-index: 0; background: repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(26,122,62,0.07) 60px, rgba(26,122,62,0.07) 120px), radial-gradient(ellipse 80% 60% at 50% 50%, rgba(26,122,62,0.18) 0%, transparent 70%), var(--pitch); }
+    .hero-badge { position: absolute; top: 90px; right: 2rem; background: var(--gold); color: var(--pitch); font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; font-weight: 900; letter-spacing: 0.08em; padding: 0.3rem 0.7rem; border-radius: 3px; text-transform: uppercase; }
+    .hero-inner { position: relative; z-index: 1; max-width: 720px; }
+    .hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.2em; color: var(--green-light); text-transform: uppercase; margin-bottom: 1rem; }
+    .hero-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(3.5rem,10vw,7rem); font-weight: 900; line-height: 0.92; letter-spacing: -0.01em; text-transform: uppercase; }
+    .hero-title .accent { color: var(--gold); display: block; }
+    .hero-sub { margin-top: 1.5rem; font-size: 1.05rem; color: var(--gray); max-width: 480px; }
+    .hero-actions { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--gold); color: var(--pitch); padding: 0.8rem 2rem; border-radius: 4px; font-weight: 700; font-size: 1rem; text-decoration: none; letter-spacing: 0.03em; text-transform: uppercase; transition: background 0.2s, transform 0.15s; display: inline-block; border: none; cursor: pointer; font-family: 'Inter', sans-serif; }
+    .btn-primary:hover { background: var(--gold-dark); transform: translateY(-1px); }
+    .btn-ghost { border: 1.5px solid rgba(248,250,248,0.25); color: var(--white); padding: 0.8rem 2rem; border-radius: 4px; font-weight: 600; font-size: 1rem; text-decoration: none; letter-spacing: 0.03em; text-transform: uppercase; transition: border-color 0.2s; display: inline-block; }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-prices { display: flex; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap; }
+    .price-pill { background: rgba(26,122,62,0.18); border: 1px solid rgba(26,122,62,0.4); border-radius: 6px; padding: 0.6rem 1rem; }
+    .price-pill .label { font-size: 0.7rem; color: var(--gray); letter-spacing: 0.1em; text-transform: uppercase; display: block; }
+    .price-pill .amount { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--gold); }
+
+    /* COMMON */
+    section { padding: 5rem 2rem; }
+    .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.2em; color: var(--green-light); text-transform: uppercase; margin-bottom: 0.75rem; }
+    .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2rem,5vw,3.2rem); font-weight: 900; text-transform: uppercase; line-height: 1; margin-bottom: 1rem; }
+    .section-title .accent { color: var(--gold); }
+
+    /* CATEGORIES */
+    #categories { background: var(--pitch); }
+    .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2.5rem; }
+    .cat-card { background: var(--card-bg); border: 1px solid rgba(26,122,62,0.3); border-radius: 8px; padding: 2rem 1.5rem; text-align: center; transition: border-color 0.2s, transform 0.2s; cursor: pointer; text-decoration: none; display: block; }
+    .cat-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+    .cat-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .cat-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1.25rem; font-weight: 700; text-transform: uppercase; color: var(--white); margin-bottom: 0.25rem; }
+    .cat-price { font-size: 0.85rem; color: var(--gold); font-weight: 600; }
+    .cat-desc { font-size: 0.8rem; color: var(--gray); margin-top: 0.4rem; }
+
+    /* TABS + GRID (shared by gallery & pre-order) */
+    .gallery-tabs { display: flex; gap: 0.5rem; margin: 2rem 0 1.5rem; flex-wrap: wrap; }
+    .gallery-tab { background: rgba(26,122,62,0.15); border: 1px solid rgba(26,122,62,0.35); color: var(--gray); padding: 0.45rem 1.2rem; border-radius: 4px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+    .gallery-tab:hover, .gallery-tab.active { background: var(--green); border-color: var(--green); color: var(--white); }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+    .gallery-item { border-radius: 8px; overflow: hidden; background: var(--card-bg); border: 1px solid rgba(26,122,62,0.2); transition: transform 0.2s, border-color 0.2s; }
+    .gallery-item:hover { transform: scale(1.02); border-color: var(--gold); }
+    .gallery-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+    .gallery-item-label { padding: 0.6rem 0.75rem; font-size: 0.78rem; font-weight: 600; color: var(--white); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.04em; text-transform: uppercase; }
+    .gallery-item-tag { font-size: 0.65rem; color: var(--gold); display: block; margin-top: 0.1rem; }
+    .jersey-placeholder { width: 100%; aspect-ratio: 3/4; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; overflow: hidden; }
+    .jersey-placeholder::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 8px); }
+
+    /* PRE-ORDER SECTION */
+    #preorder { background: #091508; border-top: 1px solid rgba(245,200,66,0.12); border-bottom: 1px solid rgba(245,200,66,0.12); }
+    .league-kit-badge { display: inline-block; background: rgba(245,200,66,0.15); border: 1px solid rgba(245,200,66,0.35); color: var(--gold); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 3px; padding: 0.15rem 0.45rem; margin-top: 0.25rem; }
+    .po-form-wrap { background: var(--card-bg); border: 1px solid rgba(26,122,62,0.4); border-radius: 10px; padding: 2rem; max-width: 640px; margin-top: 3rem; }
+    .po-form-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.6rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1.5rem; color: var(--gold); }
+    .po-field { margin-bottom: 1.2rem; }
+    .po-label { display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.5rem; }
+    .po-input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(26,122,62,0.4); border-radius: 5px; color: var(--white); padding: 0.7rem 1rem; font-size: 0.95rem; font-family: 'Inter', sans-serif; transition: border-color 0.2s; appearance: none; -webkit-appearance: none; }
+    .po-input:focus { outline: none; border-color: var(--gold); }
+    .po-input option { background: #132215; color: var(--white); }
+    .po-radio-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .po-radio { background: rgba(0,0,0,0.25); border: 1px solid rgba(26,122,62,0.35); border-radius: 5px; padding: 0.45rem 0.9rem; font-size: 0.85rem; color: var(--gray); cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 0.4rem; }
+    .po-radio:has(input:checked) { border-color: var(--gold); color: var(--gold); background: rgba(245,200,66,0.1); }
+    .po-radio input { accent-color: var(--gold); }
+    #po-summary { display:none; background: rgba(26,122,62,0.15); border: 1px solid rgba(26,122,62,0.4); border-radius: 6px; padding: 1rem; margin: 1rem 0; font-size: 0.88rem; color: var(--white); line-height: 1.8; }
+    .po-note { font-size: 0.75rem; color: var(--gray); margin-top: 0.75rem; text-align: center; }
+
+    /* GALLERY SECTION */
+    #gallery { background: #0b1a0c; }
+
+    /* SIZE GUIDE */
+    #sizes { background: var(--pitch); }
+    .size-table-wrap { overflow-x: auto; margin-top: 2rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th { background: var(--green-dark); color: var(--gold); font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.75rem 1rem; text-align: left; }
+    td { padding: 0.7rem 1rem; border-bottom: 1px solid rgba(26,122,62,0.15); color: var(--gray); }
+    tr:nth-child(even) td { background: rgba(26,122,62,0.05); }
+    tr:hover td { background: rgba(26,122,62,0.12); color: var(--white); }
+    .size-note { margin-top: 1rem; font-size: 0.8rem; color: var(--gray); font-style: italic; }
+
+    /* REVIEWS */
+    #reviews { background: #0b1a0c; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .review-card { background: var(--card-bg); border: 1px solid rgba(26,122,62,0.25); border-radius: 8px; padding: 1.5rem; transition: border-color 0.2s; }
+    .review-card:hover { border-color: rgba(245,200,66,0.4); }
+    .stars { color: var(--gold); font-size: 1rem; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+    .review-text { font-size: 0.92rem; color: var(--white); line-height: 1.6; font-style: italic; }
+    .review-author { margin-top: 1rem; font-size: 0.78rem; color: var(--gray); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+    .review-author span { color: var(--green-light); }
+
+    /* ORDER CTA */
+    #order { background: linear-gradient(135deg, var(--green-dark) 0%, #0a1a0b 100%); text-align: center; padding: 5rem 2rem; border-top: 1px solid rgba(245,200,66,0.2); }
+    #order .section-title { margin-bottom: 0.75rem; }
+    #order p { color: var(--gray); max-width: 480px; margin: 0 auto 2rem; }
+    .contact-row { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+    .contact-pill { background: rgba(26,122,62,0.2); border: 1px solid rgba(26,122,62,0.5); border-radius: 6px; padding: 0.6rem 1.25rem; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600; color: var(--white); letter-spacing: 0.04em; }
+    .contact-pill a { color: inherit; text-decoration: none; }
+    .whatsapp-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: #25d366; color: #fff; padding: 0.9rem 2rem; border-radius: 4px; font-weight: 700; font-size: 1rem; text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: background 0.2s, transform 0.15s; }
+    .whatsapp-btn:hover { background: #1da851; transform: translateY(-1px); }
+
+    /* FOOTER */
+    footer { background: var(--pitch); border-top: 1px solid rgba(26,122,62,0.2); padding: 2rem; text-align: center; font-size: 0.8rem; color: var(--gray); }
+    footer a { color: var(--green-light); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero { padding-top: 80px; }
+      .hero-prices { gap: 0.75rem; }
+      .categories-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">RAHA <span>JERSEYS</span></a>
+  <ul class="nav-links">
+    <li><a href="#categories">Shop</a></li>
+    <li><a href="#preorder">Pre-Order 26/27</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#sizes">Size Guide</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+  </ul>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSdGPccnAEl2qRHaCULV-ARTnbss9P5cSIlMuPw_qgb-BYFaJA/viewform" class="nav-order" target="_blank">Order Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-pitch"></div>
+  <div class="hero-badge">⚡ Stock moves fast</div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">⚽ Nairobi's jersey plug</p>
+    <h1 class="hero-title">Rep Your Team <span class="accent">In Full Kit.</span></h1>
+    <p class="hero-sub">Premium-quality club & country jerseys at prices that won't hurt your pocket. World Cup 2026, retros, limited editions — we've got them all.</p>
+    <div class="hero-actions">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdGPccnAEl2qRHaCULV-ARTnbss9P5cSIlMuPw_qgb-BYFaJA/viewform" class="btn-primary" target="_blank">Drop Your Order</a>
+      <a href="#gallery" class="btn-ghost">View Catalogue</a>
+    </div>
+    <div class="hero-prices">
+      <div class="price-pill"><span class="label">Fan Version</span><span class="amount">Ksh 900</span></div>
+      <div class="price-pill"><span class="label">Pro Version</span><span class="amount">Ksh 1,000</span></div>
+      <div class="price-pill"><span class="label">Retro</span><span class="amount">Ksh 1,300</span></div>
+      <div class="price-pill"><span class="label">Limited Edition</span><span class="amount">Ksh 2,000</span></div>
+      <div class="price-pill"><span class="label">Printing</span><span class="amount">Ksh 300</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section id="categories">
+  <p class="section-label">What We Stock</p>
+  <h2 class="section-title">Pick Your <span class="accent">Category</span></h2>
+  <div class="categories-grid">
+    <a class="cat-card" href="#preorder">
+      <div class="cat-icon">🆕</div>
+      <div class="cat-name">Pre-Order 26/27</div>
+      <div class="cat-price">From Ksh 900</div>
+      <div class="cat-desc">Lock in new season kits before they land.</div>
+    </a>
+    <a class="cat-card" href="https://docs.google.com/forms/d/e/1FAIpQLSdGPccnAEl2qRHaCULV-ARTnbss9P5cSIlMuPw_qgb-BYFaJA/viewform" target="_blank">
+      <div class="cat-icon">🌍</div>
+      <div class="cat-name">World Cup 2026</div>
+      <div class="cat-price">From Ksh 900</div>
+      <div class="cat-desc">All nations. Home, Away & GK kits.</div>
+    </a>
+    <a class="cat-card" href="https://docs.google.com/forms/d/e/1FAIpQLSdGPccnAEl2qRHaCULV-ARTnbss9P5cSIlMuPw_qgb-BYFaJA/viewform" target="_blank">
+      <div class="cat-icon">📼</div>
+      <div class="cat-name">Retro & Old Season</div>
+      <div class="cat-price">Ksh 1,300</div>
+      <div class="cat-desc">Classic drops. Specify the year when ordering.</div>
+    </a>
+    <a class="cat-card" href="https://docs.google.com/forms/d/e/1FAIpQLSdGPccnAEl2qRHaCULV-ARTnbss9P5cSIlMuPw_qgb-BYFaJA/viewform" target="_blank">
+      <div class="cat-icon">✨</div>
+      <div class="cat-name">Limited Edition</div>
+      <div class="cat-price">Ksh 2,000</div>
+      <div class="cat-desc">Special releases. Grab before they're gone.</div>
+    </a>
+  </div>
+</section>
+
+<!-- PRE-ORDER 26/27 -->
+<section id="preorder">
+  <p class="section-label">⚡ New Season</p>
+  <h2 class="section-title">Pre-Order <span class="accent">26/27 Kits</span></h2>
+  <p style="color:var(--gray); max-width:540px; margin-bottom:0.5rem;">New season jerseys arriving soon. Lock in your kit now — we deliver the moment stock lands. Fan Ksh 900 · Pro Ksh 1,000 · Printing +Ksh 300.</p>
+
+  <!-- LEAGUE SHOWCASE -->
+  <div class="gallery-tabs" id="leagueTabs">
+    <button class="gallery-tab active" data-league="epl">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</button>
+    <button class="gallery-tab" data-league="laliga">🇪🇸 La Liga</button>
+    <button class="gallery-tab" data-league="seriea">🇮🇹 Serie A</button>
+    <button class="gallery-tab" data-league="bundesliga">🇩🇪 Bundesliga</button>
+    <button class="gallery-tab" data-league="ligue1">🇫🇷 Ligue 1</button>
+    <button class="gallery-tab" data-league="mls">🇺🇸 MLS</button>
+  </div>
+  <div class="gallery-grid" id="leagueGrid"></div>
+
+  <!-- PRE-ORDER FORM -->
+  <div class="po-form-wrap">
+    <div class="po-form-title">🔒 Lock In Your Kit</div>
+
+    <div class="po-field">
+      <label class="po-label">Your Name</label>
+      <input class="po-input" id="po-name" type="text" placeholder="e.g. Brian Mutua" />
+    </div>
+    <div class="po-field">
+      <label class="po-label">WhatsApp Number</label>
+      <input class="po-input" id="po-phone" type="tel" placeholder="e.g. 0710 611 244" />
+    </div>
+    <div class="po-field">
+      <label class="po-label">League</label>
+      <select class="po-input" id="po-league">
+        <option value="">-- Select League --</option>
+        <option>Premier League</option>
+        <option>La Liga</option>
+        <option>Serie A</option>
+        <option>Bundesliga</option>
+        <option>Ligue 1</option>
+        <option>MLS</option>
+      </select>
+    </div>
+    <div class="po-field">
+      <label class="po-label">Club</label>
+      <select class="po-input" id="po-club">
+        <option value="">-- Select League First --</option>
+      </select>
+    </div>
+    <div class="po-field">
+      <label class="po-label">Kit</label>
+      <div class="po-radio-group">
+        <label class="po-radio"><input type="radio" name="kit" value="Home" checked /> Home</label>
+        <label class="po-radio"><input type="radio" name="kit" value="Away" /> Away</label>
+        <label class="po-radio"><input type="radio" name="kit" value="Third" /> Third</label>
+        <label class="po-radio"><input type="radio" name="kit" value="Goalkeeper" /> Goalkeeper</label>
+      </div>
+    </div>
+    <div class="po-field">
+      <label class="po-label">Size</label>
+      <div class="po-radio-group">
+        <label class="po-radio"><input type="radio" name="size" value="XS" /> XS</label>
+        <label class="po-radio"><input type="radio" name="size" value="S" /> S</label>
+        <label class="po-radio"><input type="radio" name="size" value="M" checked /> M</label>
+        <label class="po-radio"><input type="radio" name="size" value="L" /> L</label>
+        <label class="po-radio"><input type="radio" name="size" value="XL" /> XL</label>
+        <label class="po-radio"><input type="radio" name="size" value="XXL" /> XXL</label>
+      </div>
+    </div>
+    <div class="po-field">
+      <label class="po-label">Printing</label>
+      <div class="po-radio-group">
+        <label class="po-radio"><input type="radio" name="printing" value="Plain" checked /> Plain</label>
+        <label class="po-radio"><input type="radio" name="printing" value="Player Name" /> Player Name (+Ksh 300)</label>
+        <label class="po-radio"><input type="radio" name="printing" value="Custom" /> Custom Name & No. (+Ksh 300)</label>
+      </div>
+    </div>
+    <div class="po-field" id="po-custom-wrap" style="display:none;">
+      <label class="po-label">Name & Number to Print</label>
+      <input class="po-input" id="po-custom-name" type="text" placeholder="e.g. WANJIKU 10" />
+    </div>
+    <div id="po-summary"></div>
+    <button class="btn-primary" id="po-btn" style="width:100%; font-size:1rem; padding:1rem; margin-top:0.5rem;">Send Pre-Order on WhatsApp</button>
+    <p class="po-note">We'll confirm your order & delivery timeline via WhatsApp within 24 hrs.</p>
+  </div>
+</section>
+
+<!-- GALLERY / BROWSE THE KITS -->
+<section id="gallery">
+  <p class="section-label">Catalogue</p>
+  <h2 class="section-title">Browse <span class="accent">The Kits</span></h2>
+  <div class="gallery-tabs">
+    <button class="gallery-tab active" data-filter="all">All</button>
+    <button class="gallery-tab" data-filter="worldcup">World Cup 2026</button>
+    <button class="gallery-tab" data-filter="retro">Retro</button>
+    <button class="gallery-tab" data-filter="club">Club</button>
+  </div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+  <p style="color:var(--gray); font-size:0.85rem; margin-top:1.5rem; text-align:center;">
+    Don't see your team? We likely have it. <a href="https://docs.google.com/forms/d/e/1FAIpQLSdGPccnAEl2qRHaCULV-ARTnbss9P5cSIlMuPw_qgb-BYFaJA/viewform" target="_blank" style="color:var(--green-light);">Drop your request →</a>
+  </p>
+</section>
+
+<!-- SIZE GUIDE -->
+<section id="sizes">
+  <p class="section-label">Size Guide</p>
+  <h2 class="section-title">Find Your <span class="accent">Fit</span></h2>
+  <p style="color:var(--gray); max-width:520px; margin-bottom:0.5rem;">All measurements in centimetres. When between sizes, size up for a looser fit.</p>
+  <div class="size-table-wrap">
+    <table>
+      <thead>
+        <tr><th>Size</th><th>Chest (cm)</th><th>Length (cm)</th><th>Shoulder (cm)</th><th>Best For</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong style="color:var(--white)">XS</strong></td><td>84–88</td><td>66</td><td>41</td><td>Slim teens & women</td></tr>
+        <tr><td><strong style="color:var(--white)">S</strong></td><td>88–92</td><td>68</td><td>43</td><td>Slim build adult</td></tr>
+        <tr><td><strong style="color:var(--white)">M</strong></td><td>96–100</td><td>71</td><td>45</td><td>Average build</td></tr>
+        <tr><td><strong style="color:var(--white)">L</strong></td><td>104–108</td><td>74</td><td>47</td><td>Broad shoulders</td></tr>
+        <tr><td><strong style="color:var(--white)">XL</strong></td><td>112–116</td><td>77</td><td>49</td><td>Large build</td></tr>
+        <tr><td><strong style="color:var(--white)">XXL</strong></td><td>120–124</td><td>80</td><td>51</td><td>Extra large build</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="size-note">Tip: Measure across the widest part of your chest. Add 2–4 cm for a relaxed match-day feel.</p>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <p class="section-label">Customer Reviews</p>
+  <h2 class="section-title">What People <span class="accent">Say</span></h2>
+  <div class="reviews-grid">
+    <div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Got my Real Madrid jersey in 2 days and the quality is fire! Even printing came out clean. Will be back for the retro Man U."</p><p class="review-author">Brian M. — <span>Westlands, Nairobi</span></p></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Ordered 4 pieces for my boys and got a discount too. Raha Jerseys is genuinely the best plug in Nairobi right now."</p><p class="review-author">Mercy W. — <span>Kasarani</span></p></div>
+    <div class="review-card"><div class="stars">★★★★☆</div><p class="review-text">"The Barcelona retro kit I ordered looked exactly like the pictures. Very premium quality for the price. Delivery was quick."</p><p class="review-author">Joash K. — <span>Kilimani</span></p></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Ordered 3 World Cup jerseys and they arrived super fast. My Argentina kit got so many compliments at the watch party 🔥"</p><p class="review-author">Amina S. — <span>South B</span></p></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Reached out on WhatsApp and they replied instantly. Even helped me choose the right size. Customer service is top tier."</p><p class="review-author">Dennis O. — <span>Embakasi</span></p></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"The Limited Edition Ballon d'Or jersey was worth every shilling. Packaging was neat, delivery was on time."</p><p class="review-author">Patricia N. — <span>Lavington</span></p></div>
+  </div>
+</section>
+
+<!-- ORDER CTA -->
+<section id="order">
+  <p class="section-label">Ready?</p>
+  <h2 class="section-title">Drop Your <span class="accent">Order Now</span></h2>
+  <p>Fill in our quick order form or hit us up on WhatsApp. We'll confirm your kit, size & delivery details within minutes.</p>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSdGPccnAEl2qRHaCULV-ARTnbss9P5cSIlMuPw_qgb-BYFaJA/viewform" class="btn-primary" target="_blank" style="font-size:1.05rem; padding:0.9rem 2.5rem;">Fill the Order Form</a>
+  <div class="contact-row">
+    <div class="contact-pill">📞 <a href="tel:+254710611244">0710 611 244</a></div>
+    <div class="contact-pill">📞 <a href="tel:+254119485338">0119 485 338</a></div>
+  </div>
+  <div style="margin-top:1rem;">
+    <a href="https://wa.me/254710611244" class="whatsapp-btn" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 0C7.163 0 0 7.163 0 16c0 2.83.737 5.49 2.027 7.807L0 32l8.418-2.003A15.94 15.94 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 01-6.79-1.862l-.486-.29-5 1.19 1.21-4.864-.317-.5A13.267 13.267 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.263-9.936c-.398-.199-2.357-1.163-2.722-1.296-.365-.133-.631-.199-.897.199-.266.398-1.03 1.296-1.263 1.562-.232.266-.465.299-.863.1-.398-.199-1.681-.619-3.2-1.973-1.183-1.054-1.982-2.355-2.214-2.753-.232-.398-.025-.613.175-.811.18-.179.398-.465.597-.698.199-.232.265-.398.398-.664.133-.265.067-.498-.033-.698-.1-.2-.897-2.163-1.23-2.962-.323-.78-.652-.674-.897-.686l-.764-.013c-.266 0-.698.1-1.064.498-.365.398-1.395 1.363-1.395 3.326s1.429 3.858 1.628 4.124c.2.265 2.814 4.296 6.817 6.024.953.411 1.696.657 2.275.84.956.304 1.826.261 2.514.158.767-.114 2.357-.963 2.69-1.894.332-.93.332-1.728.232-1.894-.1-.166-.365-.265-.764-.465z"/></svg>
+      Chat on WhatsApp
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <strong>Raha Jerseys</strong> · Nairobi, Kenya · <a href="tel:+254710611244">0710 611 244</a> / <a href="tel:+254119485338">0119 485 338</a></p>
+  <p style="margin-top:0.4rem;">💰 Happy Pocket, Happy Customer 💰</p>
+</footer>
+
+<script>
+const ORDER_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdGPccnAEl2qRHaCULV-ARTnbss9P5cSIlMuPw_qgb-BYFaJA/viewform";
+const WA_NUM = "254710611244";
+
+// ═══════════════════════════════════════
+// LEAGUE DATA — top 6 per league for showcase
+// ═══════════════════════════════════════
+const leagueShowcase = {
+  epl: [
+    { name:'Arsenal',              flag:'🔴', bg:'linear-gradient(135deg,#EF0107 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+    { name:'Liverpool',            flag:'🔴', bg:'linear-gradient(135deg,#C8102E 0%,#00B2A9 100%)', tag:'26/27 Pre-Order' },
+    { name:'Man City',             flag:'🔵', bg:'linear-gradient(135deg,#6CABDD 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+    { name:'Man United',           flag:'🔴', bg:'linear-gradient(135deg,#DA020E 0%,#000 100%)', tag:'26/27 Pre-Order' },
+    { name:'Chelsea',              flag:'🔵', bg:'linear-gradient(135deg,#034694 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+    { name:'Tottenham',            flag:'⚪', bg:'linear-gradient(135deg,#132257 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+  ],
+  laliga: [
+    { name:'FC Barcelona',         flag:'🔵🔴', bg:'linear-gradient(135deg,#A50044 0%,#004D98 100%)', tag:'26/27 Pre-Order' },
+    { name:'Real Madrid',          flag:'⚪', bg:'linear-gradient(135deg,#fff 0%,#00529F 100%)', tag:'26/27 Pre-Order' },
+    { name:'Atletico Madrid',      flag:'🔴⚪', bg:'linear-gradient(135deg,#CE3524 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+    { name:'Villarreal',           flag:'💛', bg:'linear-gradient(135deg,#FFD700 0%,#009B44 100%)', tag:'26/27 Pre-Order' },
+    { name:'Athletic Bilbao',      flag:'🔴⚪', bg:'linear-gradient(135deg,#EE2523 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+    { name:'Sevilla FC',           flag:'⚪', bg:'linear-gradient(135deg,#fff 0%,#D4021D 100%)', tag:'26/27 Pre-Order' },
+  ],
+  seriea: [
+    { name:'Inter Milan',          flag:'⚫🔵', bg:'linear-gradient(135deg,#0D1B8E 0%,#000 100%)', tag:'26/27 Pre-Order' },
+    { name:'AC Milan',             flag:'⚫🔴', bg:'linear-gradient(135deg,#000 0%,#DA020E 100%)', tag:'26/27 Pre-Order' },
+    { name:'Juventus',             flag:'⚫⚪', bg:'linear-gradient(135deg,#000 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+    { name:'Napoli',               flag:'🔵', bg:'linear-gradient(135deg,#0066B3 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+    { name:'AS Roma',              flag:'🟡🔴', bg:'linear-gradient(135deg,#8B0000 0%,#FFD700 100%)', tag:'26/27 Pre-Order' },
+    { name:'Atalanta',             flag:'🔵⚫', bg:'linear-gradient(135deg,#1E3888 0%,#000 100%)', tag:'26/27 Pre-Order' },
+  ],
+  bundesliga: [
+    { name:'Bayern Munich',        flag:'🔴', bg:'linear-gradient(135deg,#DC052D 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+    { name:'Borussia Dortmund',    flag:'💛', bg:'linear-gradient(135deg,#FDE100 0%,#000 100%)', tag:'26/27 Pre-Order' },
+    { name:'RB Leipzig',           flag:'🔴⚪', bg:'linear-gradient(135deg,#DD0741 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+    { name:'Bayer Leverkusen',     flag:'🔴⚫', bg:'linear-gradient(135deg,#E32221 0%,#000 100%)', tag:'26/27 Pre-Order' },
+    { name:'Borussia M\'gladbach', flag:'⚪🟢', bg:'linear-gradient(135deg,#fff 0%,#009A44 100%)', tag:'26/27 Pre-Order' },
+    { name:'Eintracht Frankfurt',  flag:'🔴⚫', bg:'linear-gradient(135deg,#E1000F 0%,#000 100%)', tag:'26/27 Pre-Order' },
+  ],
+  ligue1: [
+    { name:'PSG',                  flag:'🔵🔴', bg:'linear-gradient(135deg,#003f8a 0%,#DA020E 100%)', tag:'26/27 Pre-Order' },
+    { name:'Olympique Marseille',  flag:'🔵⚪', bg:'linear-gradient(135deg,#009BDE 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+    { name:'Olympique Lyon',       flag:'🔴🔵', bg:'linear-gradient(135deg,#002F6C 0%,#DA1C2B 100%)', tag:'26/27 Pre-Order' },
+    { name:'Stade Brest',          flag:'🔴⚪', bg:'linear-gradient(135deg,#DA020E 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+    { name:'RC Lens',              flag:'🟡🔴', bg:'linear-gradient(135deg,#FFD700 0%,#DA020E 100%)', tag:'26/27 Pre-Order' },
+    { name:'Monaco',               flag:'🔴⚪', bg:'linear-gradient(135deg,#DA020E 0%,#fff 100%)', tag:'26/27 Pre-Order' },
+  ],
+  mls: [
+    { name:'Inter Miami CF',       flag:'🩷', bg:'linear-gradient(135deg,#F7B5CD 0%,#000 100%)', tag:'26/27 Pre-Order' },
+    { name:'LA Galaxy',            flag:'🌟', bg:'linear-gradient(135deg,#00245D 0%,#FFD700 100%)', tag:'26/27 Pre-Order' },
+    { name:'LAFC',                 flag:'⚫🟡', bg:'linear-gradient(135deg,#000 0%,#C39E6D 100%)', tag:'26/27 Pre-Order' },
+    { name:'Seattle Sounders',     flag:'🟢🔵', bg:'linear-gradient(135deg,#5D9741 0%,#003B80 100%)', tag:'26/27 Pre-Order' },
+    { name:'Atlanta United',       flag:'🔴⚫', bg:'linear-gradient(135deg,#80000A 0%,#000 100%)', tag:'26/27 Pre-Order' },
+    { name:'NYC FC',               flag:'🔵', bg:'linear-gradient(135deg,#6CACE4 0%,#003087 100%)', tag:'26/27 Pre-Order' },
+  ]
+};
+
+// ═══════════════════════════════════════
+// ALL CLUBS per league (for pre-order dropdown)
+// ═══════════════════════════════════════
+const leagueClubs = {
+  'Premier League': ['Arsenal FC','Manchester City','Manchester United','Aston Villa','Liverpool FC','AFC Bournemouth','Sunderland AFC','Brighton & Hove Albion','Brentford FC','Chelsea FC','Fulham FC','Newcastle United','Everton FC','Leeds United','Crystal Palace','Nottingham Forest','Tottenham Hotspur','West Ham United','Burnley FC','Wolverhampton Wanderers'],
+  'La Liga': ['FC Barcelona','Real Madrid','Villarreal CF','Atletico Madrid','Real Betis Seville','Athletic Bilbao','Sevilla FC','Girona FC','Real Sociedad','Valencia CF','Getafe CF','Deportivo Alaves','Celta Vigo','Rayo Vallecano','Osasuna','Espanyol','Las Palmas','Leganes','Real Valladolid','Mallorca'],
+  'Serie A': ['AC Milan','ACF Fiorentina','AS Roma','Atalanta BC','Bologna FC','Como 1907','Inter Milan','Juventus','SSC Napoli','Lazio','Torino','Udinese','Verona','Empoli','Cagliari','Genoa','Lecce','Monza','Parma','Venezia'],
+  'Bundesliga': ['Bayern Munich','Borussia Dortmund','RB Leipzig','Bayer Leverkusen','Borussia Monchengladbach','Eintracht Frankfurt','VfB Stuttgart','Werder Bremen','SC Freiburg','Union Berlin','Wolfsburg','Augsburg','Mainz 05','Hoffenheim','FC Heidenheim','Holstein Kiel','St. Pauli','Bochum'],
+  'Ligue 1': ['Olympique Lyon','Olympique Marseille','Paris Saint-Germain','Racing Club de Lens','Stade Brest 29','Monaco','Lille OSC','Nice','Rennes','Strasbourg','Nantes','Montpellier','Reims','Auxerre','Toulouse','Angers','Saint-Etienne','Le Havre'],
+  'MLS': ['Inter Miami CF','LA Galaxy','LAFC','Seattle Sounders','Atlanta United','New York City FC','New England Revolution','Portland Timbers','FC Dallas','Columbus Crew','Philadelphia Union','Toronto FC','Orlando City','Nashville SC','Austin FC','St. Louis City','San Jose Earthquakes','Real Salt Lake','Minnesota United','Colorado Rapids','Vancouver Whitecaps','CF Montréal','Chicago Fire','DC United','Houston Dynamo','New York Red Bulls','Sporting Kansas City','FC Cincinnati','Charlotte FC','St. Louis City SC']
+};
+
+// ═══════════════════════════════════════
+// GALLERY KITS (Browse section)
+// ═══════════════════════════════════════
+const galleryKits = [
+  // World Cup
+  { cat:'worldcup', flag:'🇧🇷', name:'Brazil', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#009c3b 0%,#ffdf00 100%)' },
+  { cat:'worldcup', flag:'🇦🇷', name:'Argentina', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#74acdf 0%,#fff 100%)' },
+  { cat:'worldcup', flag:'🇫🇷', name:'France', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#002395 0%,#ED2939 100%)' },
+  { cat:'worldcup', flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', name:'England', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#fff 0%,#cf081f 100%)' },
+  { cat:'worldcup', flag:'🇩🇪', name:'Germany', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#000 0%,#DD0000 100%)' },
+  { cat:'worldcup', flag:'🇵🇹', name:'Portugal', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#006600 0%,#FF0000 100%)' },
+  { cat:'worldcup', flag:'🇪🇸', name:'Spain', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#AA151B 0%,#F1BF00 100%)' },
+  { cat:'worldcup', flag:'🇳🇱', name:'Netherlands', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#FF4F00 0%,#fff 100%)' },
+  { cat:'worldcup', flag:'🇲🇦', name:'Morocco', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#C1272D 0%,#006233 100%)' },
+  { cat:'worldcup', flag:'🇯🇵', name:'Japan', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#000066 0%,#fff 100%)' },
+  { cat:'worldcup', flag:'🇺🇸', name:'USA', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#002868 0%,#BF0A30 100%)' },
+  { cat:'worldcup', flag:'🇲🇽', name:'Mexico', sub:'World Cup 2026 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#006847 0%,#CE1126 100%)' },
+  // Retro
+  { cat:'retro', flag:'🔴', name:'Man United 1999', sub:'Treble Winners', price:'Ksh 1,300', bg:'linear-gradient(135deg,#DA020E 0%,#fff 100%)' },
+  { cat:'retro', flag:'💛', name:'Brazil 2002', sub:'World Champions', price:'Ksh 1,300', bg:'linear-gradient(135deg,#009c3b 0%,#FFDF00 100%)' },
+  { cat:'retro', flag:'🔵', name:'Chelsea 2004/05', sub:'Premier League', price:'Ksh 1,300', bg:'linear-gradient(135deg,#034694 0%,#fff 100%)' },
+  { cat:'retro', flag:'🔴', name:'Arsenal 2003/04', sub:'Invincibles', price:'Ksh 1,300', bg:'linear-gradient(135deg,#EF0107 0%,#fff 100%)' },
+  { cat:'retro', flag:'⚪', name:'Real Madrid 2002', sub:'Galácticos', price:'Ksh 1,300', bg:'linear-gradient(135deg,#fff 0%,#00529F 100%)' },
+  { cat:'retro', flag:'🔵🔴', name:'Barcelona 2005/06', sub:'Champions League', price:'Ksh 1,300', bg:'linear-gradient(135deg,#A50044 0%,#004D98 100%)' },
+  // Club (current)
+  { cat:'club', flag:'🔴', name:'Man United', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#DA020E 0%,#000 100%)' },
+  { cat:'club', flag:'🔴', name:'Liverpool', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#C8102E 0%,#00B2A9 100%)' },
+  { cat:'club', flag:'🔵', name:'Man City', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#6CABDD 0%,#fff 100%)' },
+  { cat:'club', flag:'🔴', name:'Arsenal', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#EF0107 0%,#fff 100%)' },
+  { cat:'club', flag:'⚪', name:'Real Madrid', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#fff 0%,#00529F 100%)' },
+  { cat:'club', flag:'🔵🔴', name:'Barcelona', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#A50044 0%,#004D98 100%)' },
+  { cat:'club', flag:'⚫', name:'Juventus', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#000 0%,#fff 100%)' },
+  { cat:'club', flag:'⚫🔴', name:'AC Milan', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#000 0%,#DA020E 100%)' },
+  { cat:'club', flag:'🔵', name:'Chelsea', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#034694 0%,#fff 100%)' },
+  { cat:'club', flag:'🔵', name:'PSG', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#003f8a 0%,#DA020E 100%)' },
+  { cat:'club', flag:'🔴', name:'Bayern Munich', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#DC052D 0%,#fff 100%)' },
+  { cat:'club', flag:'💛', name:'Borussia Dortmund', sub:'2024/25 • Home', price:'Ksh 900', bg:'linear-gradient(135deg,#FDE100 0%,#000 100%)' },
+];
+
+// ═══════════════════════════════════════
+// RENDER LEAGUE SHOWCASE
+// ═══════════════════════════════════════
+function renderLeague(key) {
+  const grid = document.getElementById('leagueGrid');
+  const clubs = leagueShowcase[key] || [];
+  grid.innerHTML = '';
+  clubs.forEach((club, i) => {
+    const div = document.createElement('div');
+    div.className = 'gallery-item';
+    div.style.cssText = 'opacity:0;transform:scale(0.94);transition:opacity 0.3s ease,transform 0.3s ease;';
+    div.innerHTML = `
+      <div class="jersey-placeholder" style="background:${club.bg}">${club.flag}</div>
+      <div class="gallery-item-label">${club.name}<span class="gallery-item-tag">26/27 Season • Pre-Order Now</span></div>`;
+    grid.appendChild(div);
+    setTimeout(() => { div.style.opacity='1'; div.style.transform='scale(1)'; }, i * 60);
+  });
+}
+
+document.querySelectorAll('#leagueTabs .gallery-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('#leagueTabs .gallery-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderLeague(tab.dataset.league);
+  });
+});
+renderLeague('epl');
+
+// ═══════════════════════════════════════
+// RENDER GALLERY (Browse The Kits)
+// ═══════════════════════════════════════
+function renderGallery(filter) {
+  const grid = document.getElementById('galleryGrid');
+  const items = filter === 'all' ? galleryKits : galleryKits.filter(k => k.cat === filter);
+  grid.innerHTML = '';
+  items.forEach((kit, i) => {
+    const div = document.createElement('div');
+    div.className = 'gallery-item';
+    div.style.cssText = 'opacity:0;transform:scale(0.95);transition:opacity 0.35s ease,transform 0.35s ease;';
+    div.innerHTML = `
+      <a href="${ORDER_URL}" target="_blank" style="text-decoration:none;display:block;">
+        <div class="jersey-placeholder" style="background:${kit.bg}">${kit.flag}</div>
+        <div class="gallery-item-label">${kit.name}<span class="gallery-item-tag">${kit.sub} • ${kit.price}</span></div>
+      </a>`;
+    grid.appendChild(div);
+    setTimeout(() => { div.style.opacity='1'; div.style.transform='scale(1)'; }, i * 40);
+  });
+}
+
+document.querySelectorAll('#gallery .gallery-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('#gallery .gallery-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderGallery(tab.dataset.filter);
+  });
+});
+renderGallery('all');
+
+// ═══════════════════════════════════════
+// PRE-ORDER FORM LOGIC
+// ═══════════════════════════════════════
+const leagueSelect = document.getElementById('po-league');
+const clubSelect   = document.getElementById('po-club');
+
+leagueSelect.addEventListener('change', () => {
+  const clubs = leagueClubs[leagueSelect.value] || [];
+  clubSelect.innerHTML = clubs.length
+    ? '<option value="">-- Select Club --</option>' + clubs.map(c => `<option>${c}</option>`).join('')
+    : '<option value="">-- Select League First --</option>';
+});
+
+document.querySelectorAll('input[name="printing"]').forEach(r => {
+  r.addEventListener('change', () => {
+    document.getElementById('po-custom-wrap').style.display =
+      (r.value === 'Custom' && r.checked) ? 'block' : 'none';
+  });
+});
+
+document.getElementById('po-btn').addEventListener('click', () => {
+  const name    = document.getElementById('po-name').value.trim();
+  const phone   = document.getElementById('po-phone').value.trim();
+  const league  = leagueSelect.value;
+  const club    = clubSelect.value;
+  const kit     = document.querySelector('input[name="kit"]:checked')?.value;
+  const size    = document.querySelector('input[name="size"]:checked')?.value;
+  const print   = document.querySelector('input[name="printing"]:checked')?.value;
+  const custom  = document.getElementById('po-custom-name').value.trim();
+
+  if (!name || !phone || !league || !club) {
+    alert('Please fill in your name, number, league and club first!');
+    return;
+  }
+
+  let msg = `🔒 *PRE-ORDER 26/27 — RAHA JERSEYS*\n\n`;
+  msg += `👤 Name: ${name}\n`;
+  msg += `📞 Contact: ${phone}\n`;
+  msg += `🏆 League: ${league}\n`;
+  msg += `👕 Club: ${club}\n`;
+  msg += `🎽 Kit: ${kit}\n`;
+  msg += `📏 Size: ${size}\n`;
+  msg += `🖨️ Printing: ${print}`;
+  if (print === 'Custom' && custom) msg += ` — ${custom}`;
+  msg += `\n\n_Sent from rahajerseys.co.ke_`;
+
+  window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`, '_blank');
+});
+
+// ═══════════════════════════════════════
+// SCROLL REVEAL for static cards
+// ═══════════════════════════════════════
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.cat-card, .review-card').forEach(card => {
+  card.style.opacity='0'; card.style.transform='translateY(16px)';
+  card.style.transition='opacity 0.4s ease, transform 0.4s ease';
+  observer.observe(card);
+});
+</script>
+</body>
+</html>
